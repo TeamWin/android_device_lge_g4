@@ -40,6 +40,6 @@ PRODUCT_MODEL := G4
 PRODUCT_MANUFACTURER := LG
 
 # Kernel inline build
-#TARGET_KERNEL_CONFIG := h815_defconfig
-#TARGET_VARIANT_CONFIG := h815_defconfig
-#TARGET_SELINUX_CONFIG := h815_defconfig
+#TARGET_KERNEL_CONFIG := cyanogenmod_h815_defconfig
+#TARGET_VARIANT_CONFIG := cyanogenmod_h815_defconfig
+#TARGET_SELINUX_CONFIG := cyanogenmod_h815_defconfig
