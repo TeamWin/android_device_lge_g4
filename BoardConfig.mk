@@ -26,7 +26,7 @@ BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.console=ttyHSL0 us
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x0000000 --ramdisk_offset 0x01000000 --tags_offset 0x00000100 --dt device/lge/h815/dtb.img
-TARGET_PREBUILT_KERNEL := device/lge/h815/zImage
+TARGET_PREBUILT_KERNEL := device/lge/h815/zImage-dtb
 
 # EMMC / PARTITIONS
 BOARD_BOOTIMAGE_PARTITION_SIZE     := 0x002800000
