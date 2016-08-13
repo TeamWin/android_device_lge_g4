@@ -1,7 +1,13 @@
 # making blockdevice a symlink for qseecomd
-on fs
-    rmdir /dev/block/bootdevice
-    symlink /dev/block/platform/soc.0/f9824900.sdhci /dev/block/bootdevice
+# qseecomd will CHECK if that is a SYMLINK! and if not it CRASHES!
+#on post-fs
+#    rmdir /dev/block/bootdevice
+#    symlink /dev/block/platform/f9824900.sdhci /dev/block/bootdevice
+
+service createsym /sbin/sh /createsym.sh
+
+on boot
+    start createsym
 
 # encryption support
 service qseecomd /sbin/qseecomd
