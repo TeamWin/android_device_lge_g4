@@ -1,7 +1,7 @@
 # making blockdevice a symlink for qseecomd
-#on early-init
-#    rm /dev/block/bootdevice
-#    symlink /dev/block/platform/soc.0/f9824900.sdhci /dev/block/bootdevice
+on early-init
+    rmdir /dev/block/bootdevice
+    symlink /dev/block/platform/soc.0/f9824900.sdhci /dev/block/bootdevice
 
 # encryption support
 service qseecomd /sbin/qseecomd
