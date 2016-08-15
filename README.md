@@ -42,7 +42,7 @@ Add  to `.repo/local_manifests/h815_kernel.xml`:
 ```
 Then run `repo sync` to check it out.
 
-To build the kernel run:
+To build the kernel run (all 1 line):
 
 `BUILDID=lge/h815 KCONF=cyanogenmod_h815_defconfig UARCH=x64 KDIR=kernel/lge/msm8992 vendor/sedi/prebuilt/bin/build_sediROM.sh kernelonly`
 
