@@ -1,6 +1,6 @@
 ## TWRP device tree for LG G4 (International)
 
-The whole tree is based on omnirom 6.0 and brought to you by steadfaster.
+The whole tree is expecting omnirom 6.0 sources and is a mix of TeamWin (base tree) + jcadduono (extended tree) + steadfaster (even more extended - omnirom 6.0 compatible, optimized kernel, and fully working decryption).
 Prepare the sources from here: https://github.com/omnirom/android/tree/android-6.0
 
 Add to `.repo/local_manifests/h815.xml`:
@@ -44,6 +44,6 @@ Then run `repo sync` to check it out.
 
 To build the kernel run:
 
-`BUILDID=lge/h815 KCONF=cyanogenmod_h815_defconfig UARCH=x64 KDIR=kernel/lge/msm8992 KDTB=yes vendor/sedi/prebuilt/bin/build_sediROM.sh kernelonly`
+`BUILDID=lge/h815 KCONF=cyanogenmod_h815_defconfig UARCH=x64 KDIR=kernel/lge/msm8992 vendor/sedi/prebuilt/bin/build_sediROM.sh kernelonly`
 
 
