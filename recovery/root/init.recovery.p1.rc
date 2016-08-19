@@ -10,8 +10,10 @@ on boot
     start createsym
 
 # encryption support
+on fs 
 service qseecomd /sbin/qseecomd
 
+on boot 
 service logd /system/bin/logd
     disabled
     class core
