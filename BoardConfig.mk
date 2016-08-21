@@ -63,7 +63,7 @@ TARGET_KEYMASTER_WAIT_FOR_QSEE := true
 
 ##### SEPOLICY stuff
 # https://android.googlesource.com/platform/external/sepolicy/+/marshmallow-release/README
-#BOARD_SEPOLICY_DIRS += device/lge/h815/sepolicy
+BOARD_SEPOLICY_DIRS += device/lge/h815/sepolicy
 
 # DEBUG (BOTH needed to enable logcat)
 #TWRP_INCLUDE_LOGCAT := true
