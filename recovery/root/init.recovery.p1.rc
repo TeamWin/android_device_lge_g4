@@ -5,6 +5,10 @@
 service createsym /sbin/sh /createsym.sh
     oneshot
 
+# by steadfaster (make double tap work)
+on init
+    write /sys/devices/virtual/input/lge_touch/tap2wake 1
+
 # by steadfaster (see above)
 on boot
     start createsym
