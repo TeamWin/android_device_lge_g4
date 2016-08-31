@@ -5,7 +5,7 @@ service createsym /sbin/sh /createsym.sh
     oneshot
 
 # steadfasterX: fix time in TWRP (read timekeep value from ROM)
-service getadjust /sbin/setprop persist.sys.timeadjust $(cat /data/property/persist.sys.timeadjust)
+service getadjust /sbin/sh /readtimeprop.sh
     oneshot
 
 # steadfasterX: fix time in TWRP (restore timekeep value from ROM)
