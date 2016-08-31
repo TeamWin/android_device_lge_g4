@@ -69,5 +69,5 @@ TARGET_KEYMASTER_WAIT_FOR_QSEE := true
 BOARD_SEPOLICY_DIRS += device/lge/h815/sepolicy
 
 # DEBUG (BOTH needed to enable logcat)
-TWRP_INCLUDE_LOGCAT := true
-TARGET_USES_LOGD := true
+#TWRP_INCLUDE_LOGCAT := true
+#TARGET_USES_LOGD := true
