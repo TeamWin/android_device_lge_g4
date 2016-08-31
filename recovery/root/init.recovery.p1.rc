@@ -9,7 +9,7 @@ service getadjust /sbin/sh /readtimeprop.sh
     oneshot
 
 # steadfasterX: fix time in TWRP (restore timekeep value from ROM)
-service timekeep /system/bin/timekeep restore
+service timekeep /sbin/timekeep restore
     oneshot
 
 on fs
@@ -23,7 +23,7 @@ on fs
     service qseecomd /sbin/qseecomd
 
 on boot
-    # steadfasterX: see above
+    # steadfasterX: see service for explanation
     start createsym
     start timekeep
 
