@@ -55,10 +55,14 @@ TW_THEME := portrait_hdpi
 TW_DEFAULT_BRIGHTNESS := 162
 TW_NO_USB_STORAGE := true
 TW_INCLUDE_CRYPTO := true
-TW_SCREEN_BLANK_ON_BOOT := true
 TW_EXCLUDE_SUPERSU := true
 TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
 RECOVERY_GRAPHICS_USE_LINELENGTH := true
+
+# when double tap is enabled this has to be set to FALSE otherwise when
+# an usb cable is connected the screen is blank for several minutes
+TW_SCREEN_BLANK_ON_BOOT := false
+#TW_TARGET_USES_QCOM_BSP := true
 
 # HW CRYPTO
 TARGET_HW_DISK_ENCRYPTION := true
