@@ -3,14 +3,22 @@
 # Writing a script was required as doing the same on fs, boot, init,.. has NOT worked!!
 service createsym /sbin/sh /createsym.sh
     oneshot
+    disabled
 
 # steadfasterX: fix time in TWRP (read timekeep value from ROM)
 service getadjust /sbin/sh /readtimeprop.sh
     oneshot
+    disabled
 
-# steadfasterX: fix time in TWRP (restore timekeep value from ROM)
+# steadfasterX: fix time in TWRP (restore timekeep value from CM/AOSP based ROMs)
 service timekeep /sbin/timekeep restore
     oneshot
+    disabled
+
+# steadfasterX: fix time in TWRP (restore by qcom time_daemon for STOCK bases ROMs)
+service time_daemon /sbin/time_daemon
+    oneshot
+    disabled
 
 on fs
     # steadfasterX: make double tap work in TWRP
@@ -22,7 +30,9 @@ on fs
 on boot
     # steadfasterX: see service for explanation
     start createsym
-
+    #steadfasterX: read property from ROM (after /data is available)
+    start getadjust
+    
     # logdaemon
     service logd /system/bin/logd
         disabled
@@ -32,11 +42,13 @@ on boot
         socket logdw dgram 0222 logd logd
         seclabel u:r:logd:s0
         group root system
-
-    #steadfasterX: read property from ROM (after /data is available)
-    start getadjust
+    
 
 on property:twrp.timeadjusted=1
-    #steadfasterX: update time to value from ROM (after time property was written)
+    #steadfasterX: update time to value from CM/AOSP based ROMs (after time property was written)
     start timekeep
+
+on property:twrp.timedaemon=1
+    #steadfasterX: update time to value from STOCK based ROMs (after we detect qcom time file)
+    start time_daemon
 

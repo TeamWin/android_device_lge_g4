@@ -38,14 +38,31 @@ else
         mount /data >>$LOG 2>&1
         F_LOG "mounting /data ended with <$?>"
     fi
-    if [ -r /data/property/persist.sys.timeadjust ];then
-        setprop persist.sys.timeadjust $(cat /data/property/persist.sys.timeadjust)
-        F_LOG "setting persist.sys.timeadjust ended with $?"
-        # trigger the timekeep daemon
-        setprop twrp.timeadjusted 1
+
+    # if we detect the proprietary time_daemon file ats_2 we start the qcom time_daemon
+    # but when not we assume the open source timekeep daemon and starting that instead
+    # That also means: 
+    # When you switch between e.g. CM and STOCK ROMs you may get not the expected results.
+    # The reason is that you have to do a factory reset after switching the ROM base
+    # OR delete either: 
+    #    - /data/system/time/ats_2 or /data/time/ats_2 (when switching from STOCK to CM/AOSP/..) 
+    # OR:
+    #    - /data/property/persist.sys.timeadjust (when switching from CM/AOSP/... to STOCK)
+    if [ -r /data/time/ats_2 ]||[ -r /data/system/time/ats_2 ];then
+        F_LOG "proprietary qcom time-file detected! Will start qcom time_daemon instead of timekeep!"
+        F_LOG "if you feel this is an error you may have switched from STOCK to CM/AOSP without wiping data. Delete /data/system/time/ats_2 or /data/time/ats_2 manually if that is the case"
+        # trigger time_daemon
+        setprop twrp.timedaemon 1
     else
-        F_ELOG "/data/property/persist.sys.timeadjust not accessible!"
-    fi
+        if [ -r /data/property/persist.sys.timeadjust ];then
+            setprop persist.sys.timeadjust $(cat /data/property/persist.sys.timeadjust)
+            F_LOG "setting persist.sys.timeadjust ended with $?"
+            # trigger timekeep daemon
+            setprop twrp.timeadjusted 1
+        else
+            F_ELOG "/data/property/persist.sys.timeadjust not accessible!"
+        fi
+     fi
 fi
 F_LOG "timeadjust after setprop: >$(getprop persist.sys.timeadjust)<"
 F_LOG "$0 finished"
