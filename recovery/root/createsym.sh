@@ -1,5 +1,5 @@
 #!/sbin/sh
-# workaround script by steadfaster to ensure we have the required symlink on bootdevice
+# workaround script by steadfasterX to ensure we have the required symlink on bootdevice
 
 LOG=/tmp/recovery.log
 F_LOG(){
