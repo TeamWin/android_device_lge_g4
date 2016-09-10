@@ -23,7 +23,7 @@ service time_daemon /sbin/time_daemon
 on fs
     # steadfasterX: make double tap work in TWRP
     write /sys/devices/virtual/input/lge_touch/tap2wake 1
-
+    
     # encryption support
     service qseecomd /sbin/qseecomd
 
