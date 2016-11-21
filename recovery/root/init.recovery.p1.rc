@@ -20,12 +20,22 @@ service time_daemon /sbin/time_daemon
     oneshot
     disabled
 
+# external sdcard tuning
+service tunesd /sbin/sh /tunesd.sh
+    oneshot
+    disabled
+
 on fs
     # steadfasterX: make double tap work in TWRP
     write /sys/devices/virtual/input/lge_touch/tap2wake 1
     
     # encryption support
     service qseecomd /sbin/qseecomd
+
+on post-fs
+    # performance tuning for backup to external SD card
+    start tunesd
+    #write /sys/devices/soc.0/f98a4900.sdhci/mmc_host/mmc1/mmc1:e624/block/mmcblk1/queue/read_ahead_kb 2048
 
 on boot
     # steadfasterX: see service for explanation
@@ -43,7 +53,6 @@ on boot
         seclabel u:r:logd:s0
         group root system
     
-
 on property:twrp.timeadjusted=1
     #steadfasterX: update time to value from CM/AOSP based ROMs (after time property was written)
     start timekeep
