@@ -35,15 +35,15 @@ Add  to `.repo/local_manifests/h815_kernel.xml`:
            fetch="https://bitbucket.org/" />
            
   <project name="steadfasterX/android_buildtools" path="vendor/sedi/prebuilt/bin" remote="github" revision="master" />
-  <project name="genesixx/LlamaSweet-msm8992" path="kernel/lge/msm8992" remote="github" revision="cm-13.0" />
+  <project name="steadfasterX/kernel_lge_llamasweet" path="kernel/lge/llama" remote="github" revision="cm-13.0" />
   <project name="UBERTC/aarch64-linux-android-4.9-kernel" path="prebuilts/gcc/linux-x86/aarch64-linux-android-4.9-kernel" remote="bitbucket" revision="master" />
   <project name="xiaolu/mkbootimg_tools" path="prebuilts/devtools/mkbootimg_tools" remote="github" revision="master" />
 </manifest>
 ```
 Then run `repo sync` to check it out.
 
-To build the kernel run (all 1 line):
+To build the kernel run (all in 1 line):
 
-`BUILDID=lge/h815 KCONF=cyanogenmod_h815_defconfig UARCH=x64 KDIR=kernel/lge/msm8992 vendor/sedi/prebuilt/bin/build_sediROM.sh kernelonly`
+`BUILDID=lge/h815 KCONF=cyanogenmod_h815_defconfig UARCH=x64 KDIR=kernel/lge/llama vendor/sedi/prebuilt/bin/build_sediROM.sh kernelonly`
 
 
