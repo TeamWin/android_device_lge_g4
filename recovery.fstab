@@ -8,3 +8,4 @@
 /efs2		emmc	/dev/block/platform/f9824900.sdhci/by-name/modemst2	flags=backup=1;subpartitionof=/efs1
 /external_sd	vfat	/dev/block/mmcblk1p1 /dev/block/mmcblk1	flags=display="Micro SDCard";storage;wipeingui;removable;encryptable=/dev/block/bootdevice/by-name/encrypt
 /usb-otg		vfat	/dev/block/sda1 /dev/block/sda		flags=display="USB-OTG";storage;wipeingui;removable
+/misc		emmc	/dev/block/platform/f9824900.sdhci/by-name/misc

@@ -54,6 +54,9 @@ TW_INCLUDE_CRYPTO := true
 TW_EXCLUDE_SUPERSU := true
 TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
 RECOVERY_GRAPHICS_USE_LINELENGTH := true
+# ignore a factory reset when using the phone's factory reset screen
+# instead just open TWRP - even when /misc partition is used!
+TW_IGNORE_BOOTLOADER_FACTORY_RESET := true
 
 # when double tap is enabled this has to be set to FALSE otherwise when
 # an usb cable is connected the screen is blank for several minutes
