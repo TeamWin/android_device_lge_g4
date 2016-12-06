@@ -35,7 +35,10 @@ on fs
 on post-fs
     # performance tuning for backup to external SD card
     start tunesd
-    #write /sys/devices/soc.0/f98a4900.sdhci/mmc_host/mmc1/mmc1:e624/block/mmcblk1/queue/read_ahead_kb 2048
+    
+    # scaling gov
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor intelliactive
+    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor intelliactive
 
 on boot
     # steadfasterX: see service for explanation
