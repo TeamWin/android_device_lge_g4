@@ -1,12 +1,12 @@
 # steadfasterX: making blockdevice a symlink for qseecomd
 # qseecomd will CHECK if that is a SYMLINK! and if NOT -> it CRASHES!
 # Writing a script was required as doing the same on fs, boot, init,.. has NOT worked!!
-service createsym /sbin/sh /createsym.sh
+service createsym /sbin/sh /sbin/createsym.sh
     oneshot
     disabled
 
 # steadfasterX: fix time in TWRP (read timekeep value from ROM)
-service getadjust /sbin/sh /readtimeprop.sh
+service getadjust /sbin/sh /sbin/readtimeprop.sh
     oneshot
     disabled
 
@@ -21,11 +21,33 @@ service time_daemon /sbin/time_daemon
     disabled
 
 # external sdcard tuning
-service tunesd /sbin/sh /tunesd.sh
+service tunesd /sbin/sh /sbin/tunesd.sh
     oneshot
     disabled
 
+# debug stuff
+service debugme /sbin/sh /sbin/debugme.sh
+    oneshot
+    disabled
+
+on early-init
+    # TESTING/DEBUG
+    start debugme
+#    trigger load_persist_props
+#    load_persist_props
+
+#on late-init
+#    trigger load_persist_props
+#    load_persist_props
+
 on fs
+    # loading props (req for unified builds)
+    mount_all /fstab.p1
+    #trigger load_persist_props
+    load_persist_props
+    umount /system
+    umount /firmware
+
     # steadfasterX: make double tap work in TWRP
     write /sys/devices/virtual/input/lge_touch/tap2wake 1
     
@@ -33,6 +55,9 @@ on fs
     service qseecomd /sbin/qseecomd
 
 on post-fs
+#    trigger load_persist_props
+#    load_persist_props
+
     # performance tuning for backup to external SD card
     start tunesd
     
@@ -41,6 +66,9 @@ on post-fs
     write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor intelliactive
 
 on boot
+#    trigger load_persist_props
+#    load_persist_props
+
     # steadfasterX: see service for explanation
     start createsym
     #steadfasterX: read property from ROM (after /data is available)
