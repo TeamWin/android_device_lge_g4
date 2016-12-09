@@ -33,17 +33,17 @@ service debugme /sbin/sh /sbin/debugme.sh
 on early-init
     # TESTING/DEBUG
     start debugme
-#    trigger load_persist_props
-#    load_persist_props
+    trigger load_persist_props
+    load_persist_props
 
-#on late-init
-#    trigger load_persist_props
-#    load_persist_props
+on late-init
+    trigger load_persist_props
+    load_persist_props
 
 on fs
     # loading props (req for unified builds)
     mount_all /fstab.p1
-    #trigger load_persist_props
+    trigger load_persist_props
     load_persist_props
     umount /system
     umount /firmware
@@ -55,8 +55,8 @@ on fs
     service qseecomd /sbin/qseecomd
 
 on post-fs
-#    trigger load_persist_props
-#    load_persist_props
+    trigger load_persist_props
+    load_persist_props
 
     # performance tuning for backup to external SD card
     start tunesd
@@ -66,8 +66,8 @@ on post-fs
     write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor intelliactive
 
 on boot
-#    trigger load_persist_props
-#    load_persist_props
+    trigger load_persist_props
+    load_persist_props
 
     # steadfasterX: see service for explanation
     start createsym
