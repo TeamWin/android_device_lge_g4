@@ -37,31 +37,34 @@ void vendor_load_properties()
   char product_model[PROP_VALUE_MAX];
   char product_device[PROP_VALUE_MAX];
   char build_product[PROP_VALUE_MAX];
-  // We trust ro.product.name most as other properties are not reliable for setting model name
-  property_get("ro.product.name",product_name);
-  // Nevertheless we read this one as well for unknown types
-  property_get("ro.product.model",product_model);
+  // We trust ro.product.device most as other properties are not reliable for setting model name
   property_get("ro.product.device",product_device);
+  // Nevertheless we read this one as well for unknown types
+  property_get("ro.product.name",product_name);
+  property_get("ro.product.model",product_model);
   property_get("ro.build.product",build_product);
-  // Check WHETHER we got a global device
-  if (strstr(product_name,"p1_global_com"))
+
+  // Check what device types we have and set their prop accordingly
+  if (strstr(product_device,"h815")
+      || strstr(product_name,"p1_global_com")) {
       // if its global then it has to be H815
       property_set("ro.product.model","LG-H815");
       property_set("ro.product.name","p1_global_com");
       property_set("ro.product.device","h815");
       property_set("ro.build.product","h815");
-  else if (strstr(product_name,"p1_tmo_us"))
-      // Check WHETHER we got a T-Mobile US device
-      //if its T-Mobile US then it has to be H811
+  } else if (strstr(product_device,"h811")
+      || strstr(product_name,"p1_tmo_us")
+      || strstr(product_name,"g4__tmo_us")) {
       property_set("ro.product.model","LG-H811");
       property_set("ro.product.name","p1_tmo_us");
       property_set("ro.product.device","h811");
       property_set("ro.build.product","h811");
   // Check WHETHER we got another device
-  else
+  } else {
       //The wont work on other devices so just let them be their own props
       property_set("ro.product.model",product_model);
       property_set("ro.product.name",product_name);
       property_set("ro.product.device",product_device);
       property_set("ro.build.product",build_product);
+  }
 }
