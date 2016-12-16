@@ -30,24 +30,22 @@ service debugme /sbin/sh /sbin/debugme.sh
     oneshot
     disabled
 
-on early-init
-    # TESTING/DEBUG
-    start debugme
-    trigger load_system_props
-    load_system_props
+# unfortunately in MM we cannot umount so we need this workaround
+# can be removed when sources has moved to Nougat
+service umountsys /sbin/umount /system
+     oneshot
+     disabled
 
-#on late-init
-#    trigger load_persist_props
+# this loads the props to identify the device for unifying
+# unfortunately in MM we cannot umount 
+#on early-fs
+#    mount_all /fstab.p1
+#    load_system_props
 #    load_persist_props
+#    start umountsys
 
 on fs
-    # loading props (req for unified builds)
-    mount_all /fstab.p1
-    trigger load_system_props
-    load_system_props
-    #umount /system
-    #umount /firmware
-
+    #start debugme
     # steadfasterX: make double tap work in TWRP
     write /sys/devices/virtual/input/lge_touch/tap2wake 1
     
@@ -55,10 +53,6 @@ on fs
     service qseecomd /sbin/qseecomd
 
 on post-fs
-    mount_all /fstab.p1
-    trigger load_system_props
-    load_system_props
-
     # performance tuning for backup to external SD card
     start tunesd
     
@@ -67,10 +61,6 @@ on post-fs
     write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor intelliactive
 
 on boot
-    mount_all /fstab.p1
-    trigger load_system_props
-    load_system_props
-
     # steadfasterX: see service for explanation
     start createsym
     #steadfasterX: read property from ROM (after /data is available)
