@@ -37,3 +37,10 @@ PRODUCT_NAME := omni_h815
 PRODUCT_BRAND := lge
 PRODUCT_MODEL := LG-H815
 PRODUCT_MANUFACTURER := LGE
+
+# Model is set via init library
+PRODUCT_SYSTEM_PROPERTY_BLACKLIST := \
+    ro.product.model \
+    ro.build.product \
+    ro.product.name \
+    ro.product.device
