@@ -25,25 +25,6 @@ service tunesd /sbin/sh /sbin/tunesd.sh
     oneshot
     disabled
 
-# debug stuff
-service debugme /sbin/sh /sbin/debugme.sh
-    oneshot
-    disabled
-
-# unfortunately in MM we cannot umount so we need this workaround
-# can be removed when sources has moved to Nougat
-service umountsys /sbin/umount /system
-     oneshot
-     disabled
-
-# this loads the props to identify the device for unifying
-# unfortunately in MM we cannot umount 
-#on early-fs
-#    mount_all /fstab.p1
-#    load_system_props
-#    load_persist_props
-#    start umountsys
-
 on fs
     #start debugme
     # steadfasterX: make double tap work in TWRP
