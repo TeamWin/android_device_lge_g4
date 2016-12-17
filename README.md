@@ -1,4 +1,7 @@
-## TWRP device tree for LG G4 (H815 - international) including decryption support 
+## TWRP device tree for LG G4 (H811 & H815 - international) including decryption support 
+
+This tree is a unified version which can create a build for the H811 and H815 devices.
+Just build. The detection happens when TWRP boots up.
 
 The whole tree is expecting omnirom 6.0 sources and is a mix of TeamWin (base tree) + jcadduono (extended tree) + steadfasterX (even more extended - omnirom 6.0 compatible, optimized kernel, and fully working decryption).
 Prepare the sources from here: https://github.com/omnirom/android/tree/android-6.0
