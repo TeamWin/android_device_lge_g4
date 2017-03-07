@@ -78,7 +78,7 @@ BOARD_SEPOLICY_DIRS += device/lge/h815/sepolicy
 #TWRP_INCLUDE_LOGCAT := true
 #TARGET_USES_LOGD := true
 
-# CHeck whether we are running on h815 or h811 by their product name 
+# Unify all h81x devices
 TARGET_UNIFIED_DEVICE := true
 TARGET_INIT_VENDOR_LIB := libinit_g4
 TARGET_RECOVERY_DEVICE_MODULES := libinit_g4
