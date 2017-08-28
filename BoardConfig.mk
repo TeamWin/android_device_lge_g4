@@ -78,10 +78,7 @@ BOARD_SEPOLICY_DIRS += device/lge/g4/sepolicy
 #TWRP_INCLUDE_LOGCAT := true
 #TARGET_USES_LOGD := true
 
-# busybox has bugs in newer release which writes escape chars in adb shell when using arrow keys etc
-TW_USE_TOOLBOX := true
-
-# Unify all h81x devices
+# Unify all g4 models
 TARGET_UNIFIED_DEVICE := true
 TARGET_INIT_VENDOR_LIB := libinit_g4
 TARGET_RECOVERY_DEVICE_MODULES := libinit_g4
