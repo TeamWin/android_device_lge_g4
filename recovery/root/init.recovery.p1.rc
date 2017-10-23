@@ -2,30 +2,40 @@
 service getadjust /sbin/sh /sbin/readtimeprop.sh
     oneshot
     disabled
+    seclabel u:r:recovery:s0
 
 # steadfasterX: fix time in TWRP (restore timekeep value from CM/AOSP based ROMs)
 service timekeep /sbin/timekeep restore
     oneshot
     disabled
+    seclabel u:r:recovery:s0
 
 # steadfasterX: fix time in TWRP (restore by qcom time_daemon for STOCK bases ROMs)
 service time_daemon /sbin/time_daemon
     oneshot
     disabled
+    seclabel u:r:recovery:s0
 
 # external sdcard tuning
 service tunesd /sbin/sh /sbin/tunesd.sh
     oneshot
     disabled
+    seclabel u:r:recovery:s0
+
+# encryption support
+service qseecomd /sbin/qseecomd
+    oneshot
+    disabled
+    seclabel u:object_r:tee_exec:s0
+
 
 on fs
     #start debugme
     # steadfasterX: make double tap work in TWRP
     write /sys/devices/virtual/input/lge_touch/tap2wake 1
     
-    # encryption support
-    service qseecomd /sbin/qseecomd
-
+    start qseecomd
+    
 on post-fs
     # performance tuning for backup to external SD card
     start tunesd
