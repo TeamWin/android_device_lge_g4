@@ -1,9 +1,9 @@
 [
 	{
 		"remote":"github",
-		"repository":"CyanogenMod/android_device_qcom_common",
+		"repository":"LineageOS/android_device_qcom_common",
 		"target_path":"device/qcom/common",
-		"revision":"cm-13.0"
+		"revision":"cm-14.1"
 	},
 	{
 		"remote":"github",
