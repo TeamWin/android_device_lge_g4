@@ -1,3 +1,5 @@
+# TW_DEVICE_VERSION := N-beta_sfx-1
+
 # BOOTLOADER
 TARGET_BOOTLOADER_BOARD_NAME := MSM8992
 TARGET_NO_BOOTLOADER := true
@@ -67,8 +69,11 @@ TW_SCREEN_BLANK_ON_BOOT := false
 #TW_TARGET_USES_QCOM_BSP := true
 
 # HW CRYPTO
-TARGET_HW_DISK_ENCRYPTION := true
-TARGET_KEYMASTER_WAIT_FOR_QSEE := true
+TW_INCLUDE_CRYPTO := true
+#TW_CRYPTO_USE_SYSTEM_VOLD := true
+TW_CRYPTO_USE_SYSTEM_VOLD := qseecomd
+#TARGET_HW_DISK_ENCRYPTION := true
+#TARGET_KEYMASTER_WAIT_FOR_QSEE := true
 
 ##### SEPOLICY stuff
 # https://android.googlesource.com/platform/external/sepolicy/+/marshmallow-release/README
