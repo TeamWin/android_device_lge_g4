@@ -57,7 +57,7 @@ TW_EXCLUDE_SUPERSU := true
 TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
 RECOVERY_GRAPHICS_USE_LINELENGTH := true
 
-ifeq($(JENKINS_TARGET),"stock")
+ifeq ($(JENKINS_TARGET),stock)
 # ignore a factory reset when using the phone's factory reset screen
 # instead just open TWRP - even when /misc partition is used!
 # as long as /misc is mounted on /grow and the ROM doing the same all is fine
