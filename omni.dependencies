@@ -13,9 +13,9 @@
 	},
         {
                 "remote":"github",
-                "repository":"steadfasterX/kernel_lge_llamasweet",
-                "target_path":"kernel/lge/llama",
-                "revision":"cm-14.0"
+                "repository":"Suicide-Squirrel/Titan-Kernel-LG-G4",
+                "target_path":"kernel/lge/titan",
+                "revision":"aosp"
         },
 	{
 		"remote":"bitbucket",
