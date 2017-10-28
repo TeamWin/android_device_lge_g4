@@ -73,11 +73,8 @@ TW_SCREEN_BLANK_ON_BOOT := false
 #TW_TARGET_USES_QCOM_BSP := true
 
 # HW CRYPTO
-TW_INCLUDE_CRYPTO := true
-#TW_CRYPTO_USE_SYSTEM_VOLD := true
-TW_CRYPTO_USE_SYSTEM_VOLD := qseecomd
-#TARGET_HW_DISK_ENCRYPTION := true
-#TARGET_KEYMASTER_WAIT_FOR_QSEE := true
+TARGET_HW_DISK_ENCRYPTION := true
+TARGET_KEYMASTER_WAIT_FOR_QSEE := true
 
 ##### SEPOLICY stuff
 # https://android.googlesource.com/platform/external/sepolicy/+/marshmallow-release/README
