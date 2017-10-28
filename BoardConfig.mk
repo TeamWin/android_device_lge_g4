@@ -55,7 +55,7 @@ TW_NO_USB_STORAGE := true
 TW_INCLUDE_CRYPTO := true
 TW_EXCLUDE_SUPERSU := true
 TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
-RECOVERY_GRAPHICS_USE_LINELENGTH := true
+RECOVERY_GRAPHICS_FORCE_USE_LINELENGTH := true
 
 ifeq ($(JENKINS_TARGET),stock)
 # ignore a factory reset when using the phone's factory reset screen
