@@ -26,8 +26,8 @@ F_LOG "$(ls -la /tempsys/build.prop)"
 [ ! -r /tempsys/build.prop ] && F_ELOG "cannot determine installed OS! time will may not work properly.. falling back to STOCK.."
 [ $DEBUG -eq 1 ] && [ -r /tempsys/build.prop ] && F_LOG "your build entries in yours ROM build.prop: $(grep build /tempsys/build.prop)"
 SYSPROP=$(grep "ro.build.flavor" /tempsys/build.prop|cut -d "=" -f 2)
-echo "$SYSPROP" | egrep -i '(aoscp|aosp|aicp|lineage|cyanogenmod|^cm_|^omni_)' >> /dev/null
-if [ $? -eq 0 ];then ROMTYPE=custom; else ROMTYPE=stock; fi
+echo "$SYSPROP" | egrep -i '(aosp|aicp|lineage|cyanogenmod|^cm_|^omni_)' >> /dev/null
+if [ $? -eq 0 ];then ROMTYPE=custom; else ROMTYPE=qcomtime; fi
 F_LOG "system umount"
 umount /tempsys 2>&1 >> $LOG
 rm -Rf /tempsys
@@ -70,7 +70,7 @@ else
     # but when not we assume the open source timekeep daemon and starting that instead
     # OR:
     #    - /data/property/persist.sys.timeadjust (when switching from CM/AOSP/... to STOCK)
-    if [ "$ROMTYPE" == "stock" ];then
+    if [ "$ROMTYPE" == "qcomtime" ];then
    F_LOG "STOCK or STOCK based ROM!"
         F_LOG "if you feel this is an error you may have and unidentified custom ROM flavor installed!"
    F_LOG "Paste this line in the TWRP thread: flavor = $SYSPROP"
