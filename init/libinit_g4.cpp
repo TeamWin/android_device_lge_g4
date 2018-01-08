@@ -87,12 +87,12 @@ void get_device_model(void)
      return;
 }
 
-void_get_usu_model(void)
+void get_usu_model(void)
 {
     FILE *fp;
     
     fp = fopen("/dev/block/bootdevice/by-name/raw_resources", "rt");
-    lseek(fp,3145722,SEEK_SET); // set UsU offset
+    fseek(fp,3145722,SEEK_SET); // set UsU offset
     fread(buff,1,6,fp); 
     strcpy(product_model, buff); // set UsU device model
     fclose(fp);
