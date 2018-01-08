@@ -125,7 +125,7 @@ void get_usu(void)
 
         token = strtok(line, " ");
         while (token) {
-            if (memcmp(token, CMDLINE_USU, CMDLINE_USU_LEN) == 0) {
+            if (memcmp(token, CMDLINE_USU, CMDLINE_USU_LEN) == 0 and strstr(product_model,"LGLS991")) {
                 strcpy(usu_detect, "UsU_unlocked"); // UsU found
                 get_usu_model();
                 return;
