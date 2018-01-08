@@ -18,6 +18,11 @@
 #include "property_service.h"
 #include "util.h"
 #include <ctype.h>
+#include <fstream>
+#include <cerrno>
+#include <stdexcept>
+#include <cstring>
+#include <vector>
 
 #define CMDLINE_MODEL        "model.name="
 #define CMDLINE_MODEL_LEN    (strlen(CMDLINE_MODEL))
@@ -25,7 +30,6 @@
 #define CMDLINE_USU          "slub_debug="
 #define CMDLINE_USU_LEN      (strlen(CMDLINE_USU))
 #define USU_MAX 10
-
 
 char product_model[PROP_VALUE_MAX];
 char usu_detect[PROP_VALUE_MAX];
@@ -89,14 +93,13 @@ void get_device_model(void)
 
 void get_usu_model(void)
 {
-    FILE *fp;
-    
-    fp = fopen("/dev/block/bootdevice/by-name/raw_resources", "rt");
-    fseek(fp,3145722,SEEK_SET); // set UsU offset
-    fread(buff,1,6,fp); 
-    strcpy(product_model, buff); // set UsU device model
-    fclose(fp);
-} 
+  char diskName[] = "/dev/block/bootdevice/by-name/raw_resources";
+  std::string diskError = std::string() + diskName + ": ";
+  std::ifstream disk(diskName, std::ios_base::binary);
+  disk.seekg(3145722 ,disk.beg);  // UsU sector
+  std::vector<char> buffer(7); // UsU model
+  disk.read(product_model, 7); 
+}
 
 void get_usu(void)
 {
@@ -114,7 +117,7 @@ void get_usu(void)
         while (token) {
             if (memcmp(token, CMDLINE_USU, CMDLINE_USU_LEN) == 0) {
                 strcpy(usu_detect, "UsU_unlocked"); // UsU found
-                void_get_usu_model();
+                get_usu_model();
                 return;
             }
             token = strtok(NULL, " ");
