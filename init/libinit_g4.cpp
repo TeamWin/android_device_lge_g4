@@ -148,7 +148,7 @@ void vendor_load_properties()
     get_usu();
 
     // Check what device types we have and set their prop accordingly
-    if (strstr(product_model,"LG-H815")) {
+    if (strstr(product_model,"LG-H815") or strstr(product_model,"H815")) {
         property_set("ro.product.detection","success");
         property_set("ro.device.unlockmode",usu_detect);
         property_set("ro.product.model","LG-H815");
