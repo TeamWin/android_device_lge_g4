@@ -87,6 +87,17 @@ void get_device_model(void)
      return;
 }
 
+void_get_usu_model(void)
+{
+    FILE *fp;
+    
+    fp = fopen("/dev/block/bootdevice/by-name/raw_resources", "rt");
+    lseek(fp,3145722,SEEK_SET); // set UsU offset
+    fread(buff,1,6,fp); 
+    strcpy(product_model, buff); // set UsU device model
+    fclose(fp);
+} 
+
 void get_usu(void)
 {
     FILE *fp;
@@ -102,10 +113,8 @@ void get_usu(void)
         token = strtok(line, " ");
         while (token) {
             if (memcmp(token, CMDLINE_USU, CMDLINE_USU_LEN) == 0) {
-                //token += CMDLINE_USU_LEN;
-                //snprintf(usu_detect, USU_MAX, "%s", token);
-                //sanitize_usu_detect(); // also removes newlines
                 strcpy(usu_detect, "UsU_unlocked"); // UsU found
+                void_get_usu_model();
                 return;
             }
             token = strtok(NULL, " ");
@@ -122,8 +131,8 @@ void vendor_load_properties()
     char product_device[PROP_VALUE_MAX];
     char build_product[PROP_VALUE_MAX];
 
-    get_device_model();
     get_usu();
+    get_device_model();
 
     // Check what device types we have and set their prop accordingly
     if (strstr(product_model,"LG-H815")) {
