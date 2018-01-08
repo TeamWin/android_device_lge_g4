@@ -18,11 +18,9 @@
 #include "property_service.h"
 #include "util.h"
 #include <ctype.h>
-#include <fstream>
-#include <cerrno>
-#include <stdexcept>
-#include <cstring>
-#include <vector>
+
+#include <iostream>     // std::cout
+#include <fstream>      // std::ifstream
 
 #define CMDLINE_MODEL        "model.name="
 #define CMDLINE_MODEL_LEN    (strlen(CMDLINE_MODEL))
@@ -30,6 +28,8 @@
 #define CMDLINE_USU          "slub_debug="
 #define CMDLINE_USU_LEN      (strlen(CMDLINE_USU))
 #define USU_MAX 10
+#define USUOFFSET 3145722       // UsU offset
+#define USUCOUNT 6
 
 char product_model[PROP_VALUE_MAX];
 char usu_detect[PROP_VALUE_MAX];
@@ -93,12 +93,22 @@ void get_device_model(void)
 
 void get_usu_model(void)
 {
-  char diskName[] = "/dev/block/bootdevice/by-name/raw_resources";
-  std::string diskError = std::string() + diskName + ": ";
-  std::ifstream disk(diskName, std::ios_base::binary);
-  disk.seekg(3145722 ,disk.beg);  // UsU sector
-  std::vector<char> buffer(7); // UsU model
-  disk.read(product_model, 7); 
+    std::ifstream disk ("/dev/block/bootdevice/by-name/raw_resources", std::ifstream::binary);
+    if (disk) {
+      disk.seekg (0, disk.end);
+      int length = disk.tellg();
+      if ( length < USUOFFSET) {
+        printf("UsU: disk length is too small!\n");
+      } else {
+        disk.seekg (USUOFFSET, disk.beg);
+        char * buffer = new char [USUCOUNT+1];
+        disk.read (buffer,USUCOUNT);
+        disk.close();
+        strcpy(product_model,buffer);
+        printf("UsU model:  %s\n", product_model);
+        delete[] buffer;
+      }
+    }
 }
 
 void get_usu(void)
@@ -134,8 +144,8 @@ void vendor_load_properties()
     char product_device[PROP_VALUE_MAX];
     char build_product[PROP_VALUE_MAX];
 
-    get_usu();
     get_device_model();
+    get_usu();
 
     // Check what device types we have and set their prop accordingly
     if (strstr(product_model,"LG-H815")) {
