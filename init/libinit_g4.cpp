@@ -184,7 +184,7 @@ void vendor_load_properties()
         property_set("ro.product.name","p1");
         property_set("ro.product.device","f500");
         property_set("ro.build.product","f500");
-    } else if (strstr(product_model,"LS991") {
+    } else if (strstr(product_model,"LS991")) {
         property_set("ro.product.detection","success");
         property_set("ro.device.unlockmode",usu_detect);
         property_set("ro.product.model","LG-LS991");
