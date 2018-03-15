@@ -77,17 +77,17 @@ TW_CRYPTO_USE_SYSTEM_VOLD := qseecomd
 TARGET_KEYMASTER_WAIT_FOR_QSEE := true
 
 # TWRP debug flags
-TW_CRYPTO_SYSTEM_VOLD_DEBUG := true
-TARGET_RECOVERY_DEVICE_MODULES += strace debuggerd
-TW_RECOVERY_ADDITIONAL_RELINK_FILES += $(TARGET_OUT_OPTIONAL_EXECUTABLES)/strace $(TARGET_OUT_EXECUTABLES)/debuggerd64
+#TW_CRYPTO_SYSTEM_VOLD_DEBUG := true
+#TARGET_RECOVERY_DEVICE_MODULES += strace debuggerd
+#TW_RECOVERY_ADDITIONAL_RELINK_FILES += $(TARGET_OUT_OPTIONAL_EXECUTABLES)/strace $(TARGET_OUT_EXECUTABLES)/debuggerd64
 
 # SEPOLICY stuff
 # https://android.googlesource.com/platform/external/sepolicy/+/marshmallow-release/README
 BOARD_SEPOLICY_DIRS += device/lge/g4/sepolicy
 
 # DEBUG (BOTH needed to enable logcat)
-TWRP_INCLUDE_LOGCAT := true
-TARGET_USES_LOGD := true
+#TWRP_INCLUDE_LOGCAT := true
+#TARGET_USES_LOGD := true
 
 # Unify all g4 models
 TARGET_UNIFIED_DEVICE := true
