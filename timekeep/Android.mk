@@ -1,6 +1,8 @@
 LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
 
+LOCAL_LDLIBS += -llog
+
 ifneq ($(TARGET_ARCH), arm64)
     ifneq ($(TARGET_ARCH), x86_64)
         LOCAL_LDFLAGS += -Wl,-dynamic-linker,/sbin/linker

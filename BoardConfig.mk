@@ -73,13 +73,13 @@ TW_IGNORE_MISC_WIPE_DATA := true
 
 # CRYPTO
 TW_INCLUDE_CRYPTO := true
+# https://github.com/omnirom/android_bootable_recovery/commit/71c6c50d0d
 TW_CRYPTO_USE_SYSTEM_VOLD := qseecomd
-TARGET_KEYMASTER_WAIT_FOR_QSEE := true
 
 # TWRP debug flags
 #TW_CRYPTO_SYSTEM_VOLD_DEBUG := true
-#TARGET_RECOVERY_DEVICE_MODULES += strace debuggerd
-#TW_RECOVERY_ADDITIONAL_RELINK_FILES += $(TARGET_OUT_OPTIONAL_EXECUTABLES)/strace $(TARGET_OUT_EXECUTABLES)/debuggerd64
+#TARGET_RECOVERY_DEVICE_MODULES += strace
+#TW_RECOVERY_ADDITIONAL_RELINK_FILES += $(TARGET_OUT_OPTIONAL_EXECUTABLES)/strace
 
 # SEPOLICY stuff
 # https://android.googlesource.com/platform/external/sepolicy/+/marshmallow-release/README

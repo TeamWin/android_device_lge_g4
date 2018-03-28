@@ -1,3 +1,6 @@
+# import decrypt stuff
+import /init.recovery.prepdecrypt.rc
+
 # steadfasterX: fix time in TWRP (read timekeep value from ROM)
 service getadjust /sbin/sh /sbin/readtimeprop.sh
     oneshot
@@ -23,11 +26,8 @@ service tunesd /sbin/sh /sbin/tunesd.sh
     seclabel u:r:recovery:s0
 
 on fs
-    #start debugme
     # steadfasterX: make double tap work in TWRP
     write /sys/devices/virtual/input/lge_touch/tap2wake 1
-    
-    #start qseecomd
     
 on post-fs
     # performance tuning for backup to external SD card
@@ -40,7 +40,10 @@ on post-fs
 on boot
     #steadfasterX: read property from ROM (after /data is available)
     start getadjust
-    
+
+    # ensure we link odm since oreo
+    symlink /system/vendor /odm
+
     # logdaemon
     service logd /system/bin/logd
         disabled
@@ -58,4 +61,3 @@ on property:twrp.timeadjusted=1
 on property:twrp.timedaemon=1
     #steadfasterX: update time to value from STOCK based ROMs (after we detect qcom time file)
     start time_daemon
-
