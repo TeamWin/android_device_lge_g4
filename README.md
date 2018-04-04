@@ -2,7 +2,7 @@
 
 **Decryption** and working **time** requires an *Android version specific* branch of this device tree:
 
-* **Oreo** CM/LOS/AOSP based ROMs -> branch: **android-8.0**
+* **Oreo** CM/LOS/AOSP based ROMs -> branch: **android-8.1**
 * **Nougat** CM/LOS/AOSP based ROMs -> branch: **android-7.1**
 * **Nougat** STOCK based ROMs -> branch: **android-7.1**
 * **Marshmallow** CM/LOS/AOSP based ROMs -> branch: **android-6.0**
@@ -36,14 +36,14 @@ _UsU'd_ means: unlocked by [UsU](https://bit.do/unlockg4)
 
 Prepare the android sources like written in the [official TWRP guide](http://forum.xda-developers.com/showthread.php?t=1943625)
 
-Android branch to use: https://github.com/omnirom/android/tree/android-8.0
+Android branch to use: https://github.com/omnirom/android/tree/android-8.1
 
 Create `.repo/local_manifests/g4.xml`:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
-  <project name="android_external_busybox" path="external/busybox" remote="omnirom" revision="android-8.0" />
+  <project name="android_external_busybox" path="external/busybox" remote="omnirom" revision="android-8.1" />
 </manifest>
 ```
 
