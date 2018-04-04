@@ -1,13 +1,16 @@
 ## TWRP for LG G4 (ANY model)
 
-Decryption is supported for:
+**Decryption** and working **time** requires an *Android version specific* branch of this device tree:
 
-* CM/LOS/AOSP based ROMs (running MM up to O - LP may work but is unsupported)
-* STOCK based ROMs (N only)
+* **Oreo** CM/LOS/AOSP based ROMs -> branch: **android-8.0**
+* **Nougat** CM/LOS/AOSP based ROMs -> branch: **android-7.1**
+* **Nougat** STOCK based ROMs -> branch: **android-7.1**
+* **Marshmallow** CM/LOS/AOSP based ROMs -> branch: **android-6.0**
 
-This tree is unified for **all** known LG G4 models and the detection happens **automatically** when TWRP boots up.
+This repo and all(!) its branches will build TWRP *unified* which means TWRP will work for **all** known LG G4 models!
+The detection happens **automatically** when TWRP boots up.
 
-Supported devices by this tree:
+Supported devices by this repo:
 
 ### Official unlocked
 * H811
@@ -27,10 +30,15 @@ _UsU'd_ means: unlocked by [UsU](https://bit.do/unlockg4)
 * US991
 * VS986
 
+## Build instructions (on this branch)
 
-Prepare the sources from here: https://github.com/omnirom/android/tree/android-8.0
+### Prepare
 
-Add to `.repo/local_manifests/g4.xml`:
+Prepare the android sources like written in the [official TWRP guide](http://forum.xda-developers.com/showthread.php?t=1943625)
+
+Android branch to use: https://github.com/omnirom/android/tree/android-8.0
+
+Create `.repo/local_manifests/g4.xml`:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -39,9 +47,12 @@ Add to `.repo/local_manifests/g4.xml`:
 </manifest>
 ```
 
-Then run `repo sync` to check it out.
+Run `repo sync -jX` to check it out.
 
-To build:
+### Build
+
+If you want to include/build a new kernel (optional) skip to the next topic. 
+If you want to use the included kernel in this device tree proceed.
 
 ```sh
 source build/envsetup.sh
@@ -50,9 +61,9 @@ mka recoveryimage
 ```
 (the lunch command may install additional ressources)
 
-### TWRP included kernel
+### TWRP kernel (optional)
 
-Add  to `.repo/local_manifests/g4_kernel.xml`:
+Create `.repo/local_manifests/g4_kernel.xml`:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -74,5 +85,9 @@ To build the kernel run (all in 1 line):
 
 adjust MAXCPU to the amount of cores to use for building
 
-The kernel and DTB will be generated and placed in device/lge/g4
-
+The kernel and DTB will be generated and placed in device/lge/g4 with the extension "*new*" so move them accordingly:
+```sh
+mv device/lge/g4/Image.new device/lge/g4/Image
+mv device/lge/g4/dt.img-new device/lge/g4/dt.img
+```
+Then follow the *Build* topic above to include that new kernel in TWRP.
