@@ -14,9 +14,13 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "property_service.h"
-#include "util.h"
+#include <util.h>
 #include <ctype.h>
+
+#include <string.h>
+#include <unistd.h>
+#include <sys/stat.h>
+#include <sys/mount.h>
 
 #include <iostream>     // std::cout
 #include <fstream>      // std::ifstream
@@ -28,14 +32,20 @@
 #define USUOFFSET 3145722       // UsU offset
 #define USUCOUNT 6
 
+#include <stdarg.h>
+#include <android-base/logging.h>
+#include <android-base/properties.h>
 
-namespace android {
-  namespace init {
+#define _REALLY_INCLUDE_SYS__SYSTEM_PROPERTIES_H_
+#include <sys/_system_properties.h>
+#include "property_service.h"
 
-    char product_model[PROP_VALUE_MAX];
-    char usu_detect[PROP_VALUE_MAX];
+#include "libinit_g4.h"
+
+char product_model[PROP_VALUE_MAX];
+char usu_detect[PROP_VALUE_MAX];
     
-    void sanitize_product_model(void) {
+void sanitize_product_model(void) {
             const char* whitelist ="-._";
             char str[DEVID_MAX];
             char* c = str;
@@ -48,9 +58,9 @@ namespace android {
                     c++;
             }
             return;
-    }
+} // sanitize_product_model
     
-    void sanitize_usu_detect(void) {
+void sanitize_usu_detect(void) {
             const char* whitelist ="-._";
             char str[USU_MAX];
             char* c = str;
@@ -63,9 +73,9 @@ namespace android {
                     c++;
             }
             return;
-    }
+} // sanitize_usu_detect
     
-    void get_device_model(void)
+void get_device_model(void)
     {
         FILE *fp;
         char line[2048];
@@ -90,9 +100,9 @@ namespace android {
          }
          strcpy(product_model, "NOBLMODEL"); // bootloader hasn't provided the model name
          return;
-    }
+} // get_device_model
     
-    void get_usu_model(void)
+void get_usu_model(void)
     {
         std::ifstream disk ("/dev/block/bootdevice/by-name/raw_resources", std::ifstream::binary);
         if (disk) {
@@ -110,7 +120,7 @@ namespace android {
             delete[] buffer;
           }
         }
-    }
+} // get_usu_model
 
 void get_usu(void)
 {
@@ -136,10 +146,9 @@ void get_usu(void)
          }
          strcpy(usu_detect, "officially_unlocked"); // no UsU found
          return;
-    }
-    
-    
-    void vendor_load_properties()
+} // get_usu
+
+void real_vendor_load_properties()
     {
         char product_name[PROP_VALUE_MAX];
         char product_device[PROP_VALUE_MAX];
@@ -150,85 +159,95 @@ void get_usu(void)
     
         // Check what device types we have and set their prop accordingly
         if (strstr(product_model,"LG-H815") or strstr(product_model,"H815")) {
-            property_set("ro.product.detection","success");
-            property_set("ro.device.unlockmode",usu_detect);
-            property_set("ro.product.model","LG-H815");
-            property_set("ro.product.name","p1_global_com");
-            property_set("ro.product.device","h815");
-            property_set("ro.build.product","h815");
+            android::init::property_set("ro.product.detection","success");
+            android::init::property_set("ro.device.unlockmode",usu_detect);
+            android::init::property_set("ro.product.model","LG-H815");
+            android::init::property_set("ro.product.name","p1_global_com");
+            android::init::property_set("ro.product.device","h815");
+            android::init::property_set("ro.build.product","h815");
         } else if (strstr(product_model,"H810")) {
-            property_set("ro.product.detection","success");
-            property_set("ro.device.unlockmode","UsU_unlocked");
-            property_set("ro.product.model","LG-H810");
-            property_set("ro.product.name","p1");
-            property_set("ro.product.device","h810");
-            property_set("ro.build.product","h810");
+            android::init::property_set("ro.product.detection","success");
+            android::init::property_set("ro.device.unlockmode","UsU_unlocked");
+            android::init::property_set("ro.product.model","LG-H810");
+            android::init::property_set("ro.product.name","p1");
+            android::init::property_set("ro.product.device","h810");
+            android::init::property_set("ro.build.product","h810");
         } else if (strstr(product_model,"LG-H811")) {
-            property_set("ro.product.detection","success");
-            property_set("ro.device.unlockmode",usu_detect);
-            property_set("ro.product.model","LG-H811");
-            property_set("ro.product.name","p1_tmo_us");
-            property_set("ro.product.device","h811");
-            property_set("ro.build.product","h811");
+            android::init::property_set("ro.product.detection","success");
+            android::init::property_set("ro.device.unlockmode",usu_detect);
+            android::init::property_set("ro.product.model","LG-H811");
+            android::init::property_set("ro.product.name","p1_tmo_us");
+            android::init::property_set("ro.product.device","h811");
+            android::init::property_set("ro.build.product","h811");
         } else if (strstr(product_model,"H812")) {
-            property_set("ro.product.detection","success");
-            property_set("ro.device.unlockmode","UsU_unlocked");
-            property_set("ro.product.model","LG-H812");
-            property_set("ro.product.name","p1");
-            property_set("ro.product.device","h812");
-            property_set("ro.build.product","h812");
+            android::init::property_set("ro.product.detection","success");
+            android::init::property_set("ro.device.unlockmode","UsU_unlocked");
+            android::init::property_set("ro.product.model","LG-H812");
+            android::init::property_set("ro.product.name","p1");
+            android::init::property_set("ro.product.device","h812");
+            android::init::property_set("ro.build.product","h812");
         } else if (strstr(product_model,"H818")) {
-            property_set("ro.product.detection","success");
-            property_set("ro.device.unlockmode","UsU_unlocked");
-            property_set("ro.product.model","LG-H818");
-            property_set("ro.product.name","p1");
-            property_set("ro.product.device","h818");
-            property_set("ro.build.product","h818");
+            android::init::property_set("ro.product.detection","success");
+            android::init::property_set("ro.device.unlockmode","UsU_unlocked");
+            android::init::property_set("ro.product.model","LG-H818");
+            android::init::property_set("ro.product.name","p1");
+            android::init::property_set("ro.product.device","h818");
+            android::init::property_set("ro.build.product","h818");
         } else if (strstr(product_model,"H819")) {
-            property_set("ro.product.detection","success");
-            property_set("ro.device.unlockmode","UsU_unlocked");
-            property_set("ro.product.model","LG-H819");
-            property_set("ro.product.name","p1");
-            property_set("ro.product.device","h819");
-            property_set("ro.build.product","h819");
+            android::init::property_set("ro.product.detection","success");
+            android::init::property_set("ro.device.unlockmode","UsU_unlocked");
+            android::init::property_set("ro.product.model","LG-H819");
+            android::init::property_set("ro.product.name","p1");
+            android::init::property_set("ro.product.device","h819");
+            android::init::property_set("ro.build.product","h819");
         } else if (strstr(product_model,"F500")) {
-            property_set("ro.product.detection","success");
-            property_set("ro.device.unlockmode","UsU_unlocked");
-            property_set("ro.product.model","LG-F500");
-            property_set("ro.product.name","p1");
-            property_set("ro.product.device","f500");
-            property_set("ro.build.product","f500");
+            android::init::property_set("ro.product.detection","success");
+            android::init::property_set("ro.device.unlockmode","UsU_unlocked");
+            android::init::property_set("ro.product.model","LG-F500");
+            android::init::property_set("ro.product.name","p1");
+            android::init::property_set("ro.product.device","f500");
+            android::init::property_set("ro.build.product","f500");
         } else if (strstr(product_model,"LS991")) {
-            property_set("ro.product.detection","success");
-            property_set("ro.device.unlockmode","UsU_unlocked");
-            property_set("ro.product.model","LG-LS991");
-            property_set("ro.product.name","p1");
-            property_set("ro.product.device","ls991");
-            property_set("ro.build.product","ls991");
+            android::init::property_set("ro.product.detection","success");
+            android::init::property_set("ro.device.unlockmode","UsU_unlocked");
+            android::init::property_set("ro.product.model","LG-LS991");
+            android::init::property_set("ro.product.name","p1");
+            android::init::property_set("ro.product.device","ls991");
+            android::init::property_set("ro.build.product","ls991");
         } else if (strstr(product_model,"US991")) {
-            property_set("ro.product.detection","success");
-            property_set("ro.device.unlockmode","UsU_unlocked");
-            property_set("ro.product.model","LG-US991");
-            property_set("ro.product.name","p1");
-            property_set("ro.product.device","us991");
-            property_set("ro.build.product","us991");
+            android::init::property_set("ro.product.detection","success");
+            android::init::property_set("ro.device.unlockmode","UsU_unlocked");
+            android::init::property_set("ro.product.model","LG-US991");
+            android::init::property_set("ro.product.name","p1");
+            android::init::property_set("ro.product.device","us991");
+            android::init::property_set("ro.build.product","us991");
         } else if (strstr(product_model,"VS986")) {
-            property_set("ro.product.detection","success");
-            property_set("ro.device.unlockmode","UsU_unlocked");
-            property_set("ro.product.model","LG-VS986");
-            property_set("ro.product.name","p1");
-            property_set("ro.product.device","vs986");
-            property_set("ro.build.product","vs986");
+            android::init::property_set("ro.product.detection","success");
+            android::init::property_set("ro.device.unlockmode","UsU_unlocked");
+            android::init::property_set("ro.product.model","LG-VS986");
+            android::init::property_set("ro.product.name","p1");
+            android::init::property_set("ro.product.device","vs986");
+            android::init::property_set("ro.build.product","vs986");
         // Only these above should exists.. no others can!
         } else {
             //The wont work on other devices so just let them be their own props
-            property_set("ro.product.detection","unknown_model");
-            property_set("ro.device.unlockmode",usu_detect);
-            property_set("ro.product.model",product_model);
-            property_set("ro.product.name",product_name);
-            property_set("ro.product.device",product_device);
-            property_set("ro.build.product",build_product);
+            android::init::property_set("ro.product.detection","unknown_model");
+            android::init::property_set("ro.device.unlockmode",usu_detect);
+            android::init::property_set("ro.product.model",product_model);
+            android::init::property_set("ro.product.name",product_name);
+            android::init::property_set("ro.product.device",product_device);
+            android::init::property_set("ro.build.product",build_product);
         }
-    }
-  }  // namespace init
+} // real_vendor_load_properties
+
+// libinit_g4.h will rename vendor_load_properties() to real_vendor_load_properties()
+// Call the appropriate real_vendor_load_properties() depending on android version
+#undef vendor_load_properties
+
+// Android 8.1 has to use namespace android::init
+namespace android {
+namespace init {
+        void vendor_load_properties() { real_vendor_load_properties(); }
+}  // namespace init
 }  // namespace android
+ 
