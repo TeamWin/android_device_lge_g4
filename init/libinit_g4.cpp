@@ -16,22 +16,12 @@
 #include <stdio.h>
 #include <util.h>
 #include <ctype.h>
-
 #include <string.h>
 #include <unistd.h>
 #include <sys/stat.h>
 #include <sys/mount.h>
-
 #include <iostream>     // std::cout
 #include <fstream>      // std::ifstream
-
-#define CMDLINE_MODEL        "model.name="
-#define CMDLINE_MODEL_LEN    (strlen(CMDLINE_MODEL))
-#define DEVID_MAX 10
-#define USU_MAX 10
-#define USUOFFSET 3145722       // UsU offset
-#define USUCOUNT 6
-
 #include <stdarg.h>
 #include <android-base/logging.h>
 #include <android-base/properties.h>

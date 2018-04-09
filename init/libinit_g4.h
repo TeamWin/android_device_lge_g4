@@ -1,16 +1,12 @@
 #ifndef _INIT_G4_COMMON_H
 #define _INIT_G4_COMMON_H
 
-
-// Rename vendor_load_properties() to real_vendor_load_properties()
-// and let init_htcCommon.cpp call the real function as appropriate
-/**
-#ifdef __cplusplus
-    // Allow usage of .c and/or .cpp (this is actually only needed in 6.0 where
-    // vendor_init is a c file, but allows for real_vendor_load_properties() to
-    // be in a .cpp file due to the #ifdef __cplusplus in vendor_init.h)
-    extern "C" { extern void real_vendor_load_properties(void); }
-#endif /* __cplusplus */
+#define CMDLINE_MODEL        "model.name="
+#define CMDLINE_MODEL_LEN    (strlen(CMDLINE_MODEL))
+#define DEVID_MAX 10
+#define USU_MAX 10
+#define USUOFFSET 3145722       // UsU offset
+#define USUCOUNT 6
 
 #define vendor_load_properties real_vendor_load_properties
 
