@@ -34,6 +34,7 @@
 
 char product_model[PROP_VALUE_MAX];
 char usu_detect[PROP_VALUE_MAX];
+const char* detected_usudev;
     
 void sanitize_product_model(void) {
             const char* whitelist ="-._";
@@ -91,24 +92,53 @@ void get_device_model(void)
          strcpy(product_model, "NOBLMODEL"); // bootloader hasn't provided the model name
          return;
 } // get_device_model
+
+void set_usudev(void) 
+    {
+	detected_usudev = "not-existent";
+
+ 	std::ifstream disk (USUDEV, std::ifstream::binary);
+        if (disk) {
+	   detected_usudev = USUDEV;
+	} else {
+	   LOG(INFO) << "UsU: No partition found at: '" << USUDEV << "'";
+           std::ifstream disk (USUDEVPF, std::ifstream::binary);
+           if (disk) {
+		 detected_usudev = USUDEVPF;
+           } else {
+	        LOG(INFO) << "UsU: No partition found at: '" << USUDEVPF << "'";
+                std::ifstream disk (USUDEVPFSOC, std::ifstream::binary);
+                if (disk) {
+		  detected_usudev = USUDEVPFSOC;
+                } else {
+	          LOG(ERROR) << "UsU: No partition found at: '" << USUDEVPFSOC << "' SO CAN NOT DETECT YOUR USU MODEL!!";
+		}
+	   }
+	}
+	LOG(INFO) << "UsU: device result: '" << detected_usudev << "'";
+} // set_usudev
     
 void get_usu_model(void)
     {
-        std::ifstream disk ("/dev/block/bootdevice/by-name/raw_resources", std::ifstream::binary);
+	set_usudev();
+
+        std::ifstream disk (detected_usudev, std::ifstream::binary);
         if (disk) {
           disk.seekg (0, disk.end);
           int length = disk.tellg();
           if ( length < USUOFFSET) {
-            printf("UsU: disk length is too small!\n");
+	    LOG(ERROR) << "UsU: disk length is too small !!!";
           } else {
             disk.seekg (USUOFFSET, disk.beg);
             char * buffer = new char [USUCOUNT+1];
             disk.read (buffer,USUCOUNT);
             disk.close();
             strcpy(product_model,buffer);
-            printf("UsU model:  %s\n", product_model);
+	    LOG(INFO) << "UsU: model detected was: '" << product_model << "'";
             delete[] buffer;
-          }
+	  }
+	} else {
+	    LOG(ERROR) << "UsU: can't open disk !!! --> '" << detected_usudev << "'";
         }
 } // get_usu_model
 
@@ -237,7 +267,9 @@ void real_vendor_load_properties()
 // Android 8.1 has to use namespace android::init
 namespace android {
 namespace init {
-        void vendor_load_properties() { real_vendor_load_properties(); }
+        void vendor_load_properties() { 
+		real_vendor_load_properties();
+	}
 }  // namespace init
 }  // namespace android
  
