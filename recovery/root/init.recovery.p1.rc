@@ -1,6 +1,13 @@
 # import decrypt stuff
 import /init.recovery.prepdecrypt.rc
 
+# steadfasterX: making blockdevice a symlink for qseecomd
+# qseecomd will CHECK if that is a SYMLINK! and if NOT -> it CRASHES!
+# Writing a script was required as doing the same on fs, boot, init,.. has NOT worked!!
+service createsym /sbin/sh /sbin/createsym.sh
+    oneshot
+    disabled
+
 # steadfasterX: fix time in TWRP (read timekeep value from ROM)
 service getadjust /sbin/sh /sbin/readtimeprop.sh
     oneshot
@@ -38,6 +45,8 @@ on post-fs
     write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor intelliactive
 
 on boot
+    # steadfasterX: see service for explanation
+    start createsym
     #steadfasterX: read property from ROM (after /data is available)
     start getadjust
 
