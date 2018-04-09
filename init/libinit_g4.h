@@ -8,6 +8,10 @@
 #define USUOFFSET 3145722       // UsU offset
 #define USUCOUNT 6
 
+#define USUDEV		"/dev/block/bootdevice/by-name/raw_resources"
+#define USUDEVPF        "/dev/block/platform/f9824900.sdhci/by-name/raw_resources"
+#define USUDEVPFSOC     "/dev/block/platform/soc.0/f9824900.sdhci/by-name/raw_resources"
+
 #define vendor_load_properties real_vendor_load_properties
 
 // 8.0 no longer *needs* these defines but they are needed for backwards
