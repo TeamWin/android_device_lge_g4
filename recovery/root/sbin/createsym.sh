@@ -16,7 +16,10 @@ TAG="SYMLINK"
 F_LOG "Starting $0"
 F_LOG "bootdevice check before actually doing anything: >$(ls -la /dev/block/ |grep bootdevice)<"
 rm -Rf /dev/block/bootdevice >> $LOG
-ln -vs /dev/block/platform/f9824900.sdhci /dev/block/bootdevice >> $LOG
-LNKERR=$?
+LNKERR=0
+[ -d /dev/block/platform/f9824900.sdhci/ ] && ln -vs /dev/block/platform/f9824900.sdhci /dev/block/bootdevice >> $LOG
+LNKERR=$((LINKERR + $?))
+[ -d /dev/block/platform/soc.0/f9824900.sdhci/ ] && ln -vs /dev/block/platform/soc.0/f9824900.sdhci /dev/block/bootdevice >> $LOG
+LNKERR=$((LINKERR + $?))
 F_LOG "bootdevice check after fixing the symlink: >$(ls -la /dev/block/ |grep bootdevice)<"
 F_LOG "$0 finished with <$LNKERR>"
