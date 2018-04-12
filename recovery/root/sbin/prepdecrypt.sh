@@ -21,8 +21,18 @@ relink()
 	chmod 755 $target
 }
 
-syspath="/dev/block/bootdevice/by-name/system"
+# the dev path can be different so we need to identify it
+syspathsoc="/dev/block/platform/soc.0/f9824900.sdhci/by-name/system"
+syspathnosoc="/dev/block/platform/f9824900.sdhci/by-name/system"
+syspath=undefined
+while [ ! -e "$syspath" ];do
+    [ -e "$syspathnosoc" ] && syspath="$syspathnosoc"
+    [ -e "$syspathsoc" ] && syspath="$syspathsoc"
+    F_LOG "syspath: $syspath"
+    [ "$syspath" == "undefined" ] && F_LOG "sleeping a bit as syspath is not there yet.." && sleep 1
+done
 
+# prepare and mount
 mkdir /s >> $LOG 2>&1 
 mount -t ext4 -o ro "$syspath" /s  >> $LOG 2>&1 || F_ELOG "mounting /s to $syspath failed"
 
