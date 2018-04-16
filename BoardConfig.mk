@@ -79,7 +79,7 @@ TW_CRYPTO_USE_SYSTEM_VOLD := qseecomd
 # TWRP debug flags
 TW_CRYPTO_SYSTEM_VOLD_DEBUG := true
 TARGET_RECOVERY_DEVICE_MODULES += strace debuggerd
-TW_RECOVERY_ADDITIONAL_RELINK_FILES += $(TARGET_OUT_OPTIONAL_EXECUTABLES)/strace $(TARGET_OUT_EXECUTABLES)/debuggerd64
+TW_RECOVERY_ADDITIONAL_RELINK_FILES += $(TARGET_OUT_OPTIONAL_EXECUTABLES)/strace $(TARGET_OUT_EXECUTABLES)/debuggerd
 
 # SEPOLICY stuff
 # https://android.googlesource.com/platform/external/sepolicy/+/marshmallow-release/README
