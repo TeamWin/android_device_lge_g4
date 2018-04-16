@@ -45,7 +45,13 @@ mkdir /persist-lg 2>&1 ; \
 mkdir /firmware 2>&1)"
 
 # this relinks (linker64) AND copies qseecomd to /sbin
-relink /s/vendor/bin/qseecomd  >> $LOG 2>&1 || F_ELOG "relinking qseecomd failed"
+if [ -f /s/vendor/bin/qseecomd ];then
+    relink /s/vendor/bin/qseecomd  >> $LOG 2>&1
+    [ $? -ne 0 ] && F_ELOG "relinking qseecomd failed (vendor)"
+else
+    relink /s/bin/qseecomd >> $LOG 2>&1 || F_ELOG "relinking qseecomd failed"
+    [ $? -ne 0 ] && F_ELOG "relinking qseecomd failed (system)"
+fi
 
 F_LOG "preparing libraries..."
 
