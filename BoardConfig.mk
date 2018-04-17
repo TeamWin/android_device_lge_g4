@@ -75,6 +75,7 @@ TW_IGNORE_MISC_WIPE_DATA := true
 TW_INCLUDE_CRYPTO := true
 # https://github.com/omnirom/android_bootable_recovery/commit/71c6c50d0d
 TW_CRYPTO_USE_SYSTEM_VOLD := qseecomd
+TARGET_KEYMASTER_WAIT_FOR_QSEE := true
 
 # TWRP debug flags
 TW_CRYPTO_SYSTEM_VOLD_DEBUG := true
