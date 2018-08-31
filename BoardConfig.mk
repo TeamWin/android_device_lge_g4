@@ -85,6 +85,9 @@ TARGET_KEYMASTER_WAIT_FOR_QSEE := true
 # https://android.googlesource.com/platform/external/sepolicy/+/marshmallow-release/README
 BOARD_SEPOLICY_DIRS += device/lge/g4/sepolicy
 
+# Builder's default for including /data/media (internal storage) in TWRP backups of data partition
+TW_BACKUP_INCLUDE_DATA_MEDIA := true
+
 # DEBUG (BOTH needed to enable logcat)
 #TWRP_INCLUDE_LOGCAT := true
 #TARGET_USES_LOGD := true
