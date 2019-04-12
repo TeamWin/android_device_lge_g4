@@ -37,7 +37,7 @@ _UsU'd_ means: unlocked by [UsU](https://bit.do/unlockg4)
 
 Prepare the android sources like written in the [official TWRP guide](http://forum.xda-developers.com/showthread.php?t=1943625)
 
-Android branch to use: https://github.com/omnirom/android/tree/android-9.0
+Android branch to use: https://github.com/omnirom/android/tree/android-8.1
 
 Create `.repo/local_manifests/g4.xml`:
 
