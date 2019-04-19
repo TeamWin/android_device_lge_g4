@@ -4,11 +4,5 @@
                 "repository":"Suicide-Squirrel/Titan-Kernel-LG-G4",
                 "target_path":"kernel/lge/g4",
                 "revision":"oreo-mr1-release_synced"
-        },
-        {
-                "remote":"github",
-                "repository":"LineageOS/android_system_tools_dtbtool",
-                "target_path":"system/tools/dtbtool",
-                "revision":"lineage-15.1"
         }
 ]
