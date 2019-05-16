@@ -99,7 +99,7 @@ TARGET_KEYMASTER_WAIT_FOR_QSEE := true
 BOARD_SEPOLICY_DIRS += device/lge/g4/sepolicy
 
 # Builder's default for including /data/media (internal storage) in TWRP backups of data partition
-TW_BACKUP_INCLUDE_DATA_MEDIA := true
+TW_BACKUP_INCLUDE_DATA_MEDIA := false
 
 # DEBUG (BOTH needed to enable logcat)
 #TWRP_INCLUDE_LOGCAT := true
