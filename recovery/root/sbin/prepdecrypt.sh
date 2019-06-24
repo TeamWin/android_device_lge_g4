@@ -56,10 +56,12 @@ fi
 F_LOG "preparing libraries..."
 
 # copy the hws stuff
+stop hwservicemanager
 cp /s/bin/hwservicemanager /sbin/ >> $LOG 2>&1 
 cp /s/lib64/libandroid_runtime.so /sbin/ >> $LOG 2>&1 
 cp /s/lib64/libhidltransport.so /sbin/ >> $LOG 2>&1 
 cp /s/lib64/libhidlbase.so /sbin/ >> $LOG 2>&1 
+cp /s/lib64/libhwbinder.so /sbin/ >> $LOG 2>&1
 
 # copy the decrypt stuff
 cp /s/vendor/lib64/libdiag.so /sbin/ >> $LOG 2>&1 
