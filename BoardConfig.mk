@@ -71,11 +71,12 @@ TARGET_RECOVERY_QCOM_RTC_FIX := false
 
 # GRAPHIC FLAGS
 TW_THEME := portrait_hdpi
-TW_DEFAULT_BRIGHTNESS := 162
+TW_DEFAULT_BRIGHTNESS := 200
 TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
 # when double tap is enabled this has to be set to FALSE otherwise when
 # an usb cable is connected the screen is blank for several minutes
 # TW_SCREEN_BLANK_ON_BOOT := false
+TW_NO_SCREEN_TIMEOUT := true
 
 # SPECIAL FLAGS
 # ignore a factory reset when using the phone's factory reset screen
@@ -84,6 +85,8 @@ TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
 # this flag requires to build TWRP in branch 7.1 or later
 # DO NOT SET TO FALSE WHEN YOU DO NOT KNOW WHAT YOU'RE DOING!
 TW_IGNORE_MISC_WIPE_DATA := true
+# do not build / include TWRP app
+TW_EXCLUDE_TWRPAPP := true
 
 # CRYPTO
 TW_INCLUDE_CRYPTO := true
