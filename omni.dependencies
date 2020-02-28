@@ -3,6 +3,6 @@
                 "remote":"github",
                 "repository":"Suicide-Squirrel/Titan-Kernel-LG-G4",
                 "target_path":"kernel/lge/g4",
-                "revision":"oreo-mr1-release_synced"
+                "revision":"android-8.1"
         }
 ]
